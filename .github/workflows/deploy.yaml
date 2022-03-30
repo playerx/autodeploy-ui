@@ -15,8 +15,6 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
-          git config --global user.email "bot@jok.io"
-          git config --global user.name "Deployer Bot"
       - name: Clone repository
         uses: actions/checkout@v2
 
@@ -34,4 +32,8 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        run: npm run deploy
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
