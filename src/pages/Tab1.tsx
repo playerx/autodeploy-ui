@@ -23,7 +23,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">{version.length}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+        <span>ვერსია {version}</span>
       </IonContent>
     </IonPage>
   );
