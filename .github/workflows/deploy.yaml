@@ -21,7 +21,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: .*
-          default_bump: false
+          default_bump: true
 
   build:
     name: ubuntu-latest
@@ -48,12 +48,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Set Version
+        run: echo "export const version = '${{ needs.bump_version.outputs.new_tag }}'" > src/version.ts
+
       - name: Build
         run: npm run build
 
       - name: Deploy
         run: |
-          echo "${{ needs.bump_version.outputs.new_tag }}" > build/version.txt
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npm run deploy
         env:
